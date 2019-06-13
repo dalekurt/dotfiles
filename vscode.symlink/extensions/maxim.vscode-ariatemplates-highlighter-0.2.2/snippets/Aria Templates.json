@@ -1,0 +1,40 @@
+{
+    "Macro definition": {
+        "prefix": "macro",
+        "body": [
+            "{macro ${1:name}(${2:parameter})}",
+            "\t${3:content}",
+            "{/macro}"
+        ],
+        "description": "Add a {macro ...()}"
+    },
+
+    "Foreach definition": {
+        "prefix": "fore",
+        "body": [
+            "{foreach ${1:item} inArray ${2:array})}",
+            "\t${1:item}",
+            "{/foreach}"
+        ],
+        "description": "Add a {foreach .. inArray ...}"
+    },
+
+    "For definition": {
+        "prefix": "for",
+        "body": [
+            "{for var ${1:index} = 0; ${1:index} < ${2:array}.length; ${1:index}++}",
+            "\t{var ${3:item} = ${2:array}[${1:index}] /}",
+            "{/for}"
+        ],
+        "description": "Add a {for}"
+    },
+
+    "If definition": {
+        "prefix": "if",
+        "body": [
+            "{if ${1:condition}}",
+            "{/if}"
+        ],
+        "description": "Add an {if}"
+    }
+}

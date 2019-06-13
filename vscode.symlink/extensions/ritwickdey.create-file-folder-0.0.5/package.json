@@ -1,0 +1,97 @@
+{
+	"name": "create-file-folder",
+	"displayName": "Create Files & Folders : On The Go",
+	"description": "A small extension that help you to create files & folder in Atom Style.",
+	"version": "0.0.5",
+	"publisher": "ritwickdey",
+	"engines": {
+		"vscode": "^1.14.0"
+	},
+	"author": {
+		"name": "Ritwick Dey",
+		"email": "ritwickdey@outlook.com",
+		"url": "ritwickdey.github.io"
+	},
+	"keywords": [
+		"create files",
+		"create folders"
+	],
+	"categories": [
+		"Other"
+	],
+	"preview": true,
+	"galleryBanner": {
+		"color": "#41205f",
+		"theme": "dark"
+	},
+	"activationEvents": [
+		"*"
+	],
+	"main": "./out/src/extension",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.createFile",
+				"title": "Create File",
+				"category": "Files and Folder"
+			},
+			{
+				"command": "extension.createFolder",
+				"title": "Create Folder",
+				"category": "Files and Folder"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "extension.createFile",
+				"key": "ctrl+alt+n"
+			},
+			{
+				"command": "extension.createFolder",
+				"key": "ctrl+shift+alt+n"
+			}
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"command": "extension.createFile",
+					"group": "navigation@-createFileFolder"
+				},
+				{
+					"command": "extension.createFolder",
+					"group": "navigation@-createFileFolder"
+				}
+			]
+		}
+	},
+	"license": "MIT",
+	"icon": "img/icon.png",
+	"bugs": {
+		"url": "https://github.com/ritwickdey/vscode-create-file-folder/issues",
+		"email": "ritwickdey@outlook.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ritwickdey/vscode-create-file-folder.git"
+	},
+	"homepage": "https://ritwickdey.github.io/vscode-create-file-folder/",
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"typescript": "^2.5.2",
+		"vscode": "^1.1.5",
+		"mocha": "^3.5.0",
+		"@types/node": "^7.0.43",
+		"@types/mocha": "^2.2.42"
+	},
+	"__metadata": {
+		"id": "780dc8c6-3830-4524-9522-e643ca283f8f",
+		"publisherId": "17fd9a78-e430-4a78-add2-ade4a8830352",
+		"publisherDisplayName": "Ritwick Dey"
+	}
+}

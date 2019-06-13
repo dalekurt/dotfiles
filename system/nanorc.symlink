@@ -1,0 +1,50 @@
+## Nanorc files
+include "~/.nano/nanorc.nanorc"
+## Dockerfile
+include "~/.nano/Dockerfile.nanorc"
+## Bourne shell scripts
+## include "~/.nano/bash.nanorc"
+## Markdown
+include "~/.nano/markdown.nanorc"
+## C/C++
+include "~/.nano/c.nanorc"
+## Cascading Style Sheets
+include "~/.nano/css.nanorc"
+## Debian files
+## include "~/.nano/debian.nanorc"
+## Gentoo files
+include "~/.nano/gentoo.nanorc"
+## HTML
+include "~/.nano/html.nanorc"
+## PHP
+include "~/.nano/php.nanorc"
+## TCL
+include "~/.nano/tcl.nanorc"
+## TeX
+include "~/.nano/tex.nanorc"
+## Quoted emails (under e.g. mutt)
+include "~/.nano/mutt.nanorc"
+## Patch files
+include "~/.nano/patch.nanorc"
+## Manpages
+include "~/.nano/man.nanorc"
+## Groff
+include "~/.nano/groff.nanorc"
+## Perl
+## include "~/.nano/perl.nanorc"
+## Python
+include "~/.nano/python.nanorc"
+## Ruby
+include "~/.nano/ruby.nanorc"
+## Java
+include "~/.nano/java.nanorc"
+## AWK
+## include "~/.nano/awk.nanorc"
+## Assembler
+include "~/.nano/asm.nanorc"
+## Bourne shell scripts
+include "~/.nano/sh.nanorc"
+## POV-Ray
+include "~/.nano/pov.nanorc"
+## XML-type files
+include "~/.nano/xml.nanorc"

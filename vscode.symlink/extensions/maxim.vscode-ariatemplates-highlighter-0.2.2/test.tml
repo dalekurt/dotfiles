@@ -1,0 +1,20 @@
+{Template {
+    $classpath: "plnextv2.components.availability.desktop.views.DAvailabilityView",
+    $extends: "plnextv2.components.common.availabilityOWAbstract.desktop.views.DAvailabilityOWAbstractView",
+    $templates: ["plnextv2.components.availability.desktop.views.DOWDCalendarView"],
+    $macrolibs: {
+      boundDetails: "plnextv2.utils.macroLibs.boundDetails.desktop.views.DBoundDetailsView"
+    },
+    $hasScript: true
+}}
+
+  {macro main()}
+
+    {if data.config.awardConverterMode && data.config.awardConverterMode === this.MILES_AND_CASH}
+      {call milesAndCashSwitch({
+        scope: this,
+        bounds: this.data.availability.cube.bounds
+      }) /}
+    {/if}
+  {/macro}
+{/Template}

@@ -1,0 +1,8 @@
+alias tf='terraform'
+alias tfs='terraform show terraform.tfstate | less'
+alias tfs_public='terraform show terraform.tfstate | grep public_ip'
+alias tf_ssh='ssh -l ubuntu'
+alias tfi='terraform init'
+alias tfp='terraform plan'
+alias tfa='terraform apply'
+alias tfv='terraform validate'

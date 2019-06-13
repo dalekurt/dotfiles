@@ -1,0 +1,159 @@
+" A minimal vimrc for new vim users to start with.
+"
+" Referenced here: http://www.benorenstein.com/blog/your-first-vimrc-should-be-nearly-empty/
+
+" Original Author:	 Bram Moolenaar <Bram@vim.org>
+" Made more minimal by:  Ben Orenstein
+" Last change:	         2012 Jan 20
+"
+" To use it, copy it to
+"     for Unix and OS/2:  ~/.vimrc
+"  for MS-DOS and Win32:  $VIM\_vimrc
+"
+"  If you don't understand a setting in here, just type ':h setting'.
+
+" Use Vim settings, rather than Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+set nocompatible
+
+" Switch syntax highlighting on
+syntax on
+
+let mapleader = ","
+
+" Make backspace behave in a sane manner.
+set backspace=indent,eol,start
+
+" set word wrap to 100 chars
+set tw=100
+
+" set vim update time to 100 ms per vim gitgutter
+set updatetime=100
+set timeoutlen=1000 ttimeoutlen=0
+
+" highlight searches
+set incsearch
+set ignorecase
+set smartcase
+set list
+set listchars=tab:>.,trail:.,extends:#,nbsp:.
+set ruler
+set showcmd
+set clipboard=unnamed
+set noshowmode
+set laststatus=2
+set splitright                        " Open new splits to the right
+set splitbelow                        " Open new splits to the bottom
+set lazyredraw                        " Reduce the redraw frequency
+set ttyfast                           " Send more characters in fast terminals
+set expandtab shiftwidth=2 tabstop=2  " Two spaces for tabs everywhere
+set history=500
+set hlsearch                          " Highlight search results
+set ignorecase smartcase              " Search queries intelligently set case
+set incsearch                         " Show search results as you type
+set timeoutlen=1000 ttimeoutlen=0     " Remove timeout when hitting escape
+set showcmd                           " Show size of visual selection
+
+" Persistent undo
+set undodir=~/.vim/undo/
+set undofile
+set undolevels=1000
+set undoreload=10000
+
+" Ignored files/directories from autocomplete (and CtrlP)
+set wildignore+=*/tmp/*
+set wildignore+=*.so
+set wildignore+=*.zip
+set wildignore+=*/vendor/bundle/*
+set wildignore+=*/node_modules/
+
+
+nnoremap <leader><CR> :!
+nnoremap <leader><space> i<space><esc>
+nnoremap <leader>p a<space><esc>p
+nmap <Leader>gs :!git status<CR>
+nmap <Leader>ga :!git add -i<CR>
+nmap <Leader>gc :!git commit<CR>
+nmap <Leader>t :Files<CR>
+nmap j gj
+nmap k gk
+nmap \ :Buffers<CR>
+map <Leader>/ :BLines<CR>
+map <Leader>o o<esc>
+map <Leader>O O<esc>
+
+" Enable file type detection and do language-dependent indenting.
+filetype plugin indent on
+
+autocmd FileType ruby,eruby,yaml setlocal ai sw=2 sts=2 et
+
+" we like line numbers, especially relative line numbers
+set number
+" set relativenumber
+set scrolloff=5       " Leave 5 lines of buffer when scrolling
+set sidescrolloff=10  " Leave 10 characters of horizontal buffer when scrolling
+
+set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab
+
+" add a space before pasting
+
+
+call plug#begin('~/.vim/plugged')
+Plug 'w0rp/ale'
+Plug 'powerline/powerline-fonts'
+Plug 'tjammer/blayu.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'slim-template/vim-slim'
+Plug 'itchyny/lightline.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'morhetz/gruvbox'
+Plug '/usr/local/opt/fzf'
+Plug 'pangloss/vim-javascript'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'styled-components/vim-styled-components'
+Plug 'elzr/vim-json'
+Plug 'patstockwell/vim-monokai-tasty'
+Plug 'connorholyday/vim-snazzy'
+call plug#end()
+
+
+colorscheme snazzy
+"colorscheme gruvbox
+set background=dark
+
+" Showcase comments in italics
+highlight Comment cterm=italic gui=italic
+
+
+" ale config
+let g:ale_linters = {'ruby': ['rubocop']}
+let g:ale_ruby_rubocop_executable = 'bundle'
+let g:ale_ruby_rubocop_options = ''
+let g:ale_sign_warning = '▲'
+let g:ale_sign_error = '✗'
+
+highlight link ALEWarningSign String
+highlight link ALEErrorSign Title
+
+" Neovim specific config
+if has('nvim')
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  set termguicolors
+  colorscheme NeoSolarized
+  set background=dark
+
+  " Fix vim-tmux-navigator <C-h> https://git.io/viGRU
+  nmap <BS> <C-W>h
+
+  " Fix vim-tmux-navigator <C-h> https://git.io/vS5QH
+  nmap <BS> :<C-u>TmuxNavigateLeft<CR>
+endif
+
+" Don't automatically continue comments after newline
+autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
+
+augroup myvimrchooks
+    au!
+    autocmd bufwritepost .vimrc nested source ~/.vimrc
+augroup END

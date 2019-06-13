@@ -1,0 +1,52 @@
+{
+	"name": "vscode-ariatemplates-highlighter",
+	"displayName": "Aria Templates Syntax Highlighter",
+	"description": "Aria Templates Syntax Highlighter",
+	"version": "0.2.2",
+	"publisher": "maxim",
+	"icon": "icon.png",
+	"engines": {
+		"vscode": "^1.0.0"
+	},
+	"categories": [
+		"Languages",
+		"Snippets"
+	],
+	"extensionDependencies": [],
+	"contributes": {
+		"languages": [
+			{
+				"id": "tpl",
+				"aliases": [
+					"Aria Templates",
+					"tpl"
+				],
+				"extensions": [
+					".cml",
+					".tpl",
+					".tml",
+					".tpl.css"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "tpl",
+				"scopeName": "text.html.ariatemplates",
+				"path": "./syntaxes/Aria Templates.tmLanguage"
+			}
+		],
+		"snippets": [
+			{
+				"language": "tpl",
+				"path": "./snippets/Aria Templates.json"
+			}
+		]
+	},
+	"__metadata": {
+		"id": "36d327ea-fafa-4d9c-8f30-ff6352946ecb",
+		"publisherId": "d4f27ccb-9ff1-49ca-a7ee-14aa7277417f",
+		"publisherDisplayName": "Maxim Kotelnikov"
+	}
+}
