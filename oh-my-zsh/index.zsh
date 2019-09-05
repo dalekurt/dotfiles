@@ -25,7 +25,7 @@ plugins=(
   rbenv
   osx
   autojump
-#   fast-syntax-highlighting
+  fast-syntax-highlighting
   # zsh-syntax-highlighting
   # zsh-autosuggestions
   # zsh-completions
@@ -65,6 +65,8 @@ POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(kube_ps1 dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time)
+# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs)
+# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(disk_usage time status)
 # POWERLEVEL9K_TIME_FORMAT="%D{\uf073 %d-%h}"
 # POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M \uf073 %d-%h}"
 
@@ -91,7 +93,7 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs histor
 # POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="blue"
 
 # Uncomment the following line to use case-sensitive completion.
-CASE_SENSITIVE="true"
+# CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
@@ -133,7 +135,3 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
-prompt_kube_ps1(){
-   echo -n `kube_ps1`
-}

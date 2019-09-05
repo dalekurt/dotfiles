@@ -1,0 +1,25 @@
+unbind C-b
+unbind C-d
+
+set -g prefix C-p
+set -g mouse on
+set -g allow-rename off
+set -g status-bg colour226
+set -g status-fg black 
+set -g status-left ' #S - '
+set -g status-left-length 100
+set -g status-right ' %l:%M %p '
+set -g set-titles on
+set -g default-terminal "xterm-256color"
+
+bind-key C-p send-prefix
+bind-key n new-window
+bind-key w kill-window
+bind-key h split-window -h
+bind-key v split-window -v
+bind-key [ previous-window
+bind-key ] next-window
+bind-key Down resize-pane -D 20
+bind-key Up resize-pane -U 20
+bind-key Left resize-pane -L 20
+bind-key Right resize-pane -R 20
