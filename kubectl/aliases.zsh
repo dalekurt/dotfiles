@@ -74,9 +74,14 @@ alias krh='kubectl rollout history'
 alias kru='kubectl rollout undo'
 
 # Logs
-alias kl='kubectl logs'
-alias klf='kubectl logs -f'
+alias klo='kubectl logs'
+alias klof='kubectl logs -f'
 
+# nodes
+alias kgno='kubectl get nodes'
+alias kdno='kubectl describe nodes'
+
+# kubectl
 alias kx='kubectx'
 alias kns='kubens'
 

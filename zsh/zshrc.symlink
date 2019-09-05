@@ -27,33 +27,6 @@ compinit
 
 unset config_files
 
-######### nvm
-# TODO rafael: try to move from here
-# source "/usr/local/opt/nvm/nvm.sh"
-
-######### virtualenvwrapper
-# export WORKON_HOME=$HOME/.virtualenvs
-# export PROJECT_HOME=$HOME/Devel
-# source /usr/local/bin/virtualenvwrapper.sh
-
-######### virtualenv
-# alias vpython='[ -d "../vpython-$(basename $(pwd))" ] || virtualenv -p python2.7 ../vpython-$(basename $(pwd)); source ../vpython-$(basename $(pwd))/bin/activate'
-# alias vpython3='[ -d "../vpython-$(basename $(pwd))" ] || virtualenv -p python3.7 ../vpython-$(basename $(pwd)); source ../vpython-$(basename $(pwd))/bin/activate'
-
-######### pyenv
-#eval "$(pyenv init -)"
-#export PYTHONUNBUFFERED=1
-
-######### rvm
-# # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-# export PATH="$PATH:$HOME/.rvm/bin"
-# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-######### sdkman
-# #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-# export SDKMAN_DIR="/Users/rafael/.sdkman"
-# [[ -s "/Users/rafael/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/rafael/.sdkman/bin/sdkman-init.sh"
-
 ######### fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 alias preview="fzf --preview 'bat --color \"always\" {}'"
@@ -67,11 +40,6 @@ export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(e {})+abort'"
 # if [ -f '/Users/rafael.eyng/sftw/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/rafael.eyng/sftw/google-cloud-sdk/completion.zsh.inc'; fi
 
 PATH="~/bin:$PATH"
-
-######### slack
-# alias slack1="curl -X PUT http://raspberrypi.local:9000/api/v1/inputs/1"
-# alias slack2="curl -X PUT http://raspberrypi.local:9000/api/v1/inputs/2"
-# alias slack3="curl -X PUT http://raspberrypi.local:9000/api/v1/inputs/3"
 
 ######### thumbor
 export LC_ALL=en_US.UTF-8
@@ -91,9 +59,4 @@ alias ssh-thumbor-be-staging='i2cssh -b -l rafael.eyng thumbor-staging-be-1.cmaq
 alias ssh-thumbor-fe-staging='i2cssh -b -l rafael.eyng thumbor-staging-fe-1.cmaq19fe-137.cp.globoi.com'
 alias ssh-thumbor-worker-staging='i2cssh -b -l rafael.eyng thumbor-staging-worker-1.cmaq19be-19.cp.globoi.com thumbor-staging-worker-2.cmaq21be-17.cp.globoi.com'
 
-### https://github.com/deweller/switchaudio-osx
-alias s='SwitchAudioSource'
-alias sn='s -n'
-alias s1='(s -t output -s "Built-in Output") && (s -t system -s "Built-in Output") && (s -t input -s "Built-in Microphone")'
-alias s2='(s -t output -s "Microsoft LifeChat LX-3000") && (s -t system -s "Microsoft LifeChat LX-3000") && (s -t input -s "Microsoft LifeChat LX-3000")'
-alias s3='(s -t output -s "HDMI" || s -t output -s "Built-in Output") && (s -t system -s "HDMI" || s -t system -s "Built-in Output") && (s -t input -s "HD Pro Webcam C920" || s -t input -s "Built-in Microphone")'
+export HOMEBREW_GITHUB_API_TOKEN=d302c36b1fc27ea9103e90bc00b40be7cde55f82
