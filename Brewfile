@@ -5,6 +5,7 @@ tap 'homebrew/bundle'
 tap 'homebrew/cask-fonts' # tap for fonts
 tap 'azure/draft'
 tap 'weaveworks/tap'
+tap 'sambadevi/powerlevel9k'
 
 brew 'warrensbox/tap/tfswitch'
 brew 'ack' # grep
