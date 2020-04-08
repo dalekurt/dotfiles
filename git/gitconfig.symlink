@@ -28,7 +28,7 @@
   default = simple
 [user]
 	name = Dale-Kurt Murray
-	email = hello@dalekurtmurray.com
+	email = dmurray@frame.io
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
