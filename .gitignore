@@ -6,7 +6,7 @@ atom.symlink/compile-cache
 atom.symlink/packages
 atom.symlink/storage
 atom.symlink/themes
-vscode.symlink/*
+vscode.symlink/extensions/
 git/gitconfig.local.symlink
 
 # local files, temp stuff
