@@ -60,3 +60,6 @@ alias ssh-thumbor-fe-staging='i2cssh -b -l rafael.eyng thumbor-staging-fe-1.cmaq
 alias ssh-thumbor-worker-staging='i2cssh -b -l rafael.eyng thumbor-staging-worker-1.cmaq19be-19.cp.globoi.com thumbor-staging-worker-2.cmaq21be-17.cp.globoi.com'
 
 export HOMEBREW_GITHUB_API_TOKEN=d302c36b1fc27ea9103e90bc00b40be7cde55f82
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
