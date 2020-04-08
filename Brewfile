@@ -68,12 +68,18 @@ brew 'kube-ps1'
 brew 'draft'
 brew 'fzf'
 
-
+# Applications
 cask 'visual-studio-code'
-cask 'firefox'
 cask 'iterm2'
 cask 'github'
 cask 'appzapper'
 cask 'sysdig-inspect'
 cask 'aws-vault'
 cask 'drawio'
+
+# Terminal Fonts
+cask 'font-source-code-pro'
+cask 'font-fira-code'
+cask 'font-hack'
+cask 'font-menlo-for-powerline'
+cask 'font-hack-nerd-font'
