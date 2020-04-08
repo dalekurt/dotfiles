@@ -1,0 +1,1471 @@
+{
+	
+	"autoscaling-group-vpc": {
+		"prefix": "autoscaling-group-vpc",
+		"body": [
+			"${1:myAutoscalingGroup}: ",
+			"  Type: AWS::AutoScaling::AutoScalingGroup",
+			"  Properties:",
+			"    AutoScalingGroupName: ${2:asg}",
+			"    AvailabilityZones: !GetAZs ''",
+			"    LaunchConfigurationName: ${3:!Ref LaunchConfig}",
+			"    LoadBalancerNames:",
+			"      - !Ref ElasticLoadBalancer",
+			"    MaxSize: ${4:0}",
+			"    MinSize: ${5:0}",
+			"    VPCZoneIdentifier: ",
+			"      - ${6:vpc-id}",
+			"    Tags: ",
+			"      - Key: ${7:keyname}",
+			"        Value: ${8:value}",
+			"        PropagateAtLaunch: 'true'"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"autoscaling-group": {
+		"prefix": "autoscaling-group",
+		"body": [
+			"${1:asg}:",
+			"  Type: AWS::AutoScaling::AutoScalingGroup",
+			"  Properties:",
+			"    AvailabilityZones: !GetAZs ''",
+			"    LaunchConfigurationName: ",
+			"    MaxSize: 0",
+			"    MinSize: 0",
+			"    Tags:",
+			"      - Key: keyname",
+			"        Value: value",
+			"        PropagateAtLaunch: True|False"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"availability-zone": {
+		"prefix": "availability-zone",
+		"body": [
+			"!Join",
+			"  - ''",
+			"  - - !Ref 'AWS::Region'",
+			"    - ${1:'a'}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"cloudfront-distribution": {
+		"prefix": "cloudfront-distribution",
+		"body": [
+			"${1:cloudfrontDistribution}:",
+			"  Type: AWS::CloudFront::Distribution",
+			"  Properties:",
+			"    DistributionConfig:",
+			"      CacheBehaviors:",
+			"        - ",
+			"          ${2:behavior}",
+			"      DefaultCacheBehavior: ${3}",
+			"      IPV6Enabled: ${4:true | false}",
+			"      Origins:",
+			"        - ",
+			"          ${5:origin}",
+			"    Tags:",
+			"      - Key: ${6:key}",
+			"        Value: ${7:value}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"cloudtrail": {
+		"prefix": "cloudtrail",
+		"body": [
+			"${1:cloudTrail}:",
+			"  Type: AWS::CloudTrail::Trail",
+			"  Properties:",
+			"    S3BucketName: ${2}",
+			"    IncludeGlobalServiceEvents: ${3:true | false}",
+			"    IsLogging: ${4:true | false}",
+			"    S3KeyPrefix: ${5}",
+			"    SnsTopicName: ${6}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"cloudwatch-alarm": {
+		"prefix": "cloudwatch-alarm",
+		"body": [
+			"${1:cloudWatchAlarm}:",
+			"  Type: AWS::CloudWatch::Alarm",
+			"  Properties:",
+			"    MetricName: ${2}",
+			"    Namespace: ${3}",
+			"    ComparisonOperator: ${4}",
+			"    EvaluationPeriods: ${5}",
+			"    Period: ${6}",
+			"    Statistic: ${7}",
+			"    Threshold: ${8}",
+			"    ActionsEnabled: ${9:true|false}",
+			"    AlarmActions: ${9}",
+			"    AlarmDescription: ${10}",
+			"    AlarmName: ${11}",
+			"    Dimensions: ${12}",
+			"    InsufficientDataActions: ${13}",
+			"    OKActions: ${14}",
+			"    Unit: ${15}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"cloudwatch-events-eventrule": {
+		"prefix": "cloudwatch-events-eventrule",
+		"body": [
+			"${1:eventRule}:",
+			"  Type: AWS::Events::Rule",
+			"  Properties:",
+			"    Description: ${2}",
+			"    EventPattern:",
+			"      source:",
+			"        - ${3:\"\"} # Example: \"aws.ec2\"",
+			"      detail-type:",
+			"        - ${4:\"\"} # Example: \"EC2 Instance State-change Notification\"",
+			"      detail:",
+			"        state:",
+			"          - ${5:\"\"} # Example: \"stopping\"",
+			"    State: ${6} # Example: \"ENABLED\"}",
+			"    Targets:",
+			"    - ",
+			"      Arn: ${7}",
+			"      Id: ${8}",
+			"      RoleArn: ${9}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"cloudwatch-events-scheduledrule": {
+		"prefix": "cloudwatch-events-scheduledrule",
+		"body": [
+			"${1:scheduledRule}:",
+			"  Type: AWS::Events::Rule",
+			"  Properties:",
+			"    Description: ${2}",
+			"    ScheduleExpression: \"rate(10 minutes)\"",
+			"    State: ${6} \"ENABLED\"",
+			"    Targets:",
+			"    - ",
+			"      Arn: ${7}",
+			"      Id: ${8}",
+			"      RoleArn: ${9}",
+			"${10:permissionForEventsToInvokeLambda}:",
+			"  Type: AWS::Lambda::Permission",
+			"  Properties:",
+			"    FunctionName: ${11}",
+			"    Action: ${12} # Example: \"lambda:InvokeFunction\"",
+			"    Principal: ${13} # Example: \"events.amazonaws.com\"",
+			"    SourceArn: ${14}",
+			"      Fn::GetAtt:",
+			"        - \"scheduledRule\"",
+			"        - \"Arn\""
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"codecommit-repository": {
+		"prefix": "codecommit-repository",
+		"body": [
+			"${1:codeCommitRepository}:",
+			"  Type: AWS::CodeCommit::Repository",
+			"  Properties:",
+			"    RepositoryDescription: ${2}",
+			"    RepositoryName: ${3}",
+			"    Triggers:",
+			"      - ${4:trigger}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"dynamodb-table": {
+		"prefix": "dynamodb-table",
+		"body": [
+			"${1:dynamodbTable}:",
+			"  Type: AWS::DynamoDB::Table",
+			"  Properties:",
+			"    AttributeDefinitions:",
+			"      - ",
+			"        ${2:attribute definition}",
+			"    GlobalSecondaryIndexes:",
+			"      - ",
+			"        ${3:global secondary indexes}",
+			"    LocalSecondaryIndexes:",
+			"      - ",
+			"        ${4:local secondary indexes}",
+			"    KeySchema:",
+			"      - ",
+			"        ${5:key schema}",
+			"    ProvisionedThroughput: ${6}",
+			"    TableName: ${7}",
+			"    Tags:",
+			"      - Key: ${8:key}",
+			"        Value: ${9:value}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"ec2-instance": {
+		"prefix": "ec2-instance",
+		"body": [
+			"${1:myEC2Instance}:",
+			"  Type: AWS::EC2::Instance",
+			"  Properties:",
+			"    KeyName: ${2}",
+			"    DisableApiTermination: ${3}",
+			"    ImageId: ${4}",
+			"    InstanceType: ${5}",
+			"    Monitoring: ${6:true|false}",
+			"    SecurityGroupIds:",
+			"      - ${7:sg-id}",
+			"    UserData: !Base64 |",
+			"      #!/bin/bash -ex",
+			"      # put your script here",
+			"    Tags:",
+			"      - Key: ${8:key}",
+			"        Value: ${9:value}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"ec2-volume": {
+		"prefix": "ec2-volume",
+		"body": [
+			"${1:ec2Volume}:",
+			"  Type: AWS::EC2::Volume",
+			"  Properties:",
+			"    AutoEnableIO: ${2:true|false}",
+			"    AvailabilityZone: ${3}",
+			"    Encrypted: ${4:true|false}",
+			"    KmsKeyId: ${5}",
+			"    Size: ${6:0}",
+			"    SnapshotId: ${7:snap-}",
+			"    VolumeType: ${8:standard|io1|gp2}",
+			"    Tags:",
+			"      - Key: ${9:key}",
+			"        Value: ${10:value}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"eip-vpc": {
+		"prefix": "eip-vpc",
+		"body": [
+			"${1:eipName}:",
+			"  Type: AWS::EC2::EIP",
+			"  Properties:",
+			"  Domain: vpc",
+			"  InstanceId: ${2:instance-id}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"elastic-load-balancer-vpc-internal": {
+		"prefix": "elastic-load-balancer-vpc-internal",
+		"body": [
+			"${1:myELBname}:",
+			"  Type: AWS::ElasticLoadBalancing::LoadBalancer",
+			"  Properties:",
+			"    Scheme: internal",
+			"    SecurityGroups:",
+			"      - ${2:sg-id}",
+			"    Subnets:",
+			"      - ${3:subnet-id}",
+			"    Instances:",
+			"      - ${4:instance-id}",
+			"    Listeners:",
+			"      - LoadBalancerPort: ${5}",
+			"        InstancePort: ${6}",
+			"        Protocol: ${7:HTTP|HTTPS|TCP|SSL}",
+			"        InstanceProtocol: ${8:HTTP|HTTPS|TCP|SSL}",
+			"      - LoadBalancerPort: ${9:'443'}",
+			"        InstancePort: ${10:'443'}",
+			"        Protocol: ${11:HTTPS}",
+			"        InstanceProtocol: ${12:HTTPS}",
+			"        SSLCertificateId: ${13}",
+			"    HealthCheck:",
+			"      Target: TCP:port or HTTPS|HTTP:port/PathToPing",
+			"      HealthyThreshold: ${14}",
+			"      Interval: ${15}",
+			"      Timeout: ${16}",
+			"      UnhealthyThreshold: ${17}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"elb-listener": {
+		"prefix": "elb-listener",
+		"body": [
+			"InstancePort: ${1}",
+			"InstanceProtocol: ${2:HTTP|HTTPS|TCP|SSL}",
+			"LoadBalancerPort: ${3}",
+			"Protocol: ${4:HTTP|HTTPS|TCP|SSL}",
+			"SSLCertificateId: ${5}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"iam-accesskey": {
+		"prefix": "iam-accesskey",
+		"body": [
+			"${1:iamAccessKey:}",
+			"  Type: AWS::IAM::AccessKey",
+			"  Properties:",
+			"  Status: ${2}",
+			"  UserName: ${3}",
+			"  Serial: ${4}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"iam-group": {
+		"prefix": "iam-group",
+		"body": [
+			"${1:iamGroup}:",
+			"  Type: AWS::IAM::Group",
+			"  Properties:",
+			"    Path: ${2}",
+			"    Policies:",
+			"      - ${policy}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"iam-instanceprofile": {
+		"prefix": "iam-instanceprofile",
+		"body": [
+			"${1:iamInstanceProfile}:",
+			"  Type: AWS::IAM::InstanceProfile",
+			"  Properties:",
+			"    Path: ${2:/}",
+			"    Roles:",
+			"      - ${3:rolename}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"iam-policy": {
+		"prefix": "iam-policy",
+		"body": [
+			"${1:iamPolicy}:",
+			"  Type: AWS::IAM::Policy",
+			"  Properties:",
+			"    PolicyName:${2}",
+			"    Groups:",
+			"     - ${3:group}",
+			"    Roles:",
+			"     - ${4:role}",
+			"    Users:",
+			"     - ${5:user}",
+			"    PolicyDocument: ${6: # policy document - can be JSON or YAML}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"iam-role": {
+		"prefix": "iam-role",
+		"body": [
+			"${1:iamRole}:",
+			"  Type: AWS::IAM::Role",
+			"  Properties:",
+			"    Path:",
+			"    AssumeRolePolicyDocument: ",
+			"    Policies:",
+			"      - ",
+			"       PolicyName: \"root\"",
+			"       PolicyDocument:",
+			"         Version: \"2012-10-17\"",
+			"         Statement:",
+			"            - ",
+			"              Effect: \"Allow\"",
+			"              Action: \"*\"",
+			"              Resource: \"*\""
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"iam-user": {
+		"prefix": "iam-user",
+		"body": [
+			"${1:iamUser:}",
+			"  Type: AWS::IAM::User",
+			"  Properties:",
+			"    Path: ${2:/}",
+			"    Groups:",
+			"      - ${3:groupname}",
+			"    LoginProfile:",
+			"      Password: ${4}",
+			"      PasswordResetRequired: ${5:true|false}",
+			"    Policies:",
+			"      - ${6:}policyname",
+			"    ManagedPolicyArns:",
+			"      - ${7:managedpolicyarn}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"iam-usertogroupaddition": {
+		"prefix": "iam-usertogroupaddition",
+		"body": [
+			"${1:iamUserToGroupAddition}:",
+			"  Type: AWS::IAM::UserToGroupAddition",
+			"  Properties:",
+			"    GroupName:${2}",
+			"    Users:",
+			"      - ${3:username}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"internet-gateway": {
+		"prefix": "internet-gateway",
+		"body": [
+			"${1:igwName}:",
+			"  Type: AWS::EC2::InternetGateway",
+			"  Properties:",
+			"    Tags:",
+			"      - Key: ${2:keyname}",
+			"        Value: ${3:value}",
+			"${4:AttachGateway}:",
+			"  Type: AWS::EC2::VPCGatewayAttachment",
+			"  Properties:",
+			"    VpcId: ${5:vpc-id}",
+			"    InternetGatewayId: !Ref ${1:igwName}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"kinesis-stream": {
+		"prefix": "kinesis-stream",
+		"body": [
+			"${1:kinesisStream}:",
+			"  Type: AWS::Kinesis::Stream",
+			"  Properties:",
+			"    Name:${2}",
+			"    RetentionPeriodHours: ${3:0}",
+			"    ShardCount: ${4:0}",
+			"    StreamEncryption:",
+			"      EncryptionType: KMS",
+			"      KeyId: ${5: # The GUID for the customer-managed KMS key to use for encryption}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"lambda-alias": {
+		"prefix": "lambda-alias",
+		"body": [
+			"${1:lambdaAlias}:",
+			"  Type: AWS::Lambda::Alias",
+			"  Properties:",
+			"    Description:${2}",
+			"    FunctionName:${3: #The version of the Lambda function that you want to associate with this alias.}",
+			"    FunctionVersion:${4}",
+			"    Name:${5: #A name for the alias}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"lambda-function": {
+		"prefix": "lambda-function",
+		"body": [
+			"${1:lambdaFunction}:",
+			"  Type: AWS::Lambda::Function",
+			"  Properties:",
+			"    Description: ${2}",
+			"    FunctionName: ${3}",
+			"    Handler: ${4}",
+			"    KmsKeyArn: ${5}",
+			"    MemorySize: ${6:128}",
+			"    Role: ${7:role-arn}",
+			"    Runtime: ${8:nodejs | nodejs4.3 | nodejs6.10 | nodejs8.10 | java8 | python2.7 | python3.6 | dotnetcore1.0 | dotnetcore2.0 | dotnetcore2.1 | nodejs4.3-edge | go1.x}",
+			"    Timeout: ${9}",
+			"    VpcConfig:",
+			"      SecurityGroupIds:",
+			"        - ${10:sg-id}",
+			"      SubnetIds:",
+			"        - ${11:subnet-id}",
+			"    Environment:",
+			"      Variables:",
+			"        ${12:key1}: ${13:value1} # A map of key-value pairs that the Lambda function can access",
+			"    Code:",
+			"      S3Bucket: ${14}",
+			"      S3Key: ${15}",
+			"      S3ObjectVersion: ${16}",
+			"      ZipFile: ${17}",
+			"    Tags:",
+			"      - Key: ${18:keyname}",
+			"        Value: ${19:value}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"lambda-permission": {
+		"prefix": "lambda-permission",
+		"body": [
+			"${1:lambdaPermission}:",
+			"  Type: AWS::Lambda::Permission",
+			"  Properties:",
+			"    Action: ${2}",
+			"    FunctionName: ${3}",
+			"    Principal: ${4}",
+			"    SourceAccount: ${5}",
+			"    SourceArn: ${6}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"lambda-version": {
+		"prefix": "lambda-version",
+		"body": [
+			"${1:lambdaVersion}:",
+			"  Type: AWS::Lambda::Version",
+			"  Properties:",
+			"    Description: ${2}",
+			"    FunctionName: ${3}",
+			"    CodeSha256: ${4}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"launch-config": {
+		"prefix": "launch-config",
+		"body": [
+			"${1:launchConfigName}:",
+			"  Type: AWS::AutoScaling::LaunchConfiguration",
+			"  Properties:",
+			"    LaunchConfigurationName: ${2}",
+			"    AssociatePublicIpAddress: ${3:true|false}",
+			"    IamInstanceProfile: ${4:}",
+			"    ImageId: ${5}",
+			"    EbsOptimized: ${6:true|false}",
+			"    InstanceMonitoring: ${7:true|false}",
+			"    InstanceType: ${8}",
+			"    KernelId: ${9}",
+			"    KeyName: ${10}",
+			"    SecurityGroups:",
+			"      - ${11:sg-id}",
+			"    UserData:",
+			"      Fn::Base64: !Sub",
+			"        #!/bin/bash -ex # your script here"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"launch-template": {
+		"prefix": "launch-template",
+		"body": [
+			"${1:launchTemplateName}:",
+			"  Type: AWS::EC2::LaunchTemplate",
+			"  Properties:",
+			"    LaunchTemplateName: ${2}",
+			"    LaunchTemplateData: ${3}"
+		]
+	},
+	"logs-loggroup": {
+		"prefix": "logs-loggroup",
+		"body": [
+			"${1:logLogGroup}:",
+			"  Type: AWS::Logs::LogGroup",
+			"  Properties:",
+			"    RetentionInDays: ${2}",
+			"    LogGroupName: ${3}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"logs-metricfilter": {
+		"prefix": "logs-metricfilter",
+		"body": [
+			"${1:logsMetricFilter}:",
+			"  Type: AWS::Logs::MetricFilter",
+			"  Properties:",
+			"    FilterPattern: ${2} # Example: [..., request=*.html*, status_code=4*,]",
+			"    LogGroupName: ${3}",
+			"    MetricTransformations:",
+			"      - ",
+			"        MetricValue: ${4} # Example: \"1\"",
+			"        MetricNamespace: ${5} # Example: \"WebServer/404s\"",
+			"        MetricName: ${6} # Example: \"404Count\""
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"rds-dbinstance": {
+		"prefix": "rds-dbinstance",
+		"body": [
+			"${1:rdsDBInstance}:",
+			"  Type: AWS::RDS::DBInstance",
+			"  Properties:",
+			"    AllocatedStorage: ${2}",
+			"    DBInstanceClass: ${3}",
+			"    AllowMajorVersionUpgrade: ${4:true|false}",
+			"    AutoMinorVersionUpgrade: ${5:true|false}",
+			"    AvailabilityZone: ${6}",
+			"    BackupRetentionPeriod: ${7}",
+			"    CharacterSetName: ${8}",
+			"    DBInstanceIdentifier: ${9}",
+			"    DBName: ${10}",
+			"    DBParameterGroupName: ${11}",
+			"    DBSecurityGroups: ",
+			"      - ${12:db-sg-group}",
+			"    DBSnapshotIdentifier: ${13}",
+			"    DBSubnetGroupName: ${14}",
+			"    Engine: ${15:mysql|oracle}",
+			"    EngineVersion: ${16}",
+			"    Iops: ${17}",
+			"    KmsKeyId: ${18}",
+			"    LicenseModel: ${19}",
+			"    MasterUsername: ${20}",
+			"    MasterUserPassword: ${21}",
+			"    MultiAZ: ${22:true|false}",
+			"    OptionGroupName: ${23}",
+			"    Port: ${24}",
+			"    PreferredBackupWindow: ${25}",
+			"    PreferredMaintenanceWindow: ${26}",
+			"    PubliclyAccessible: ${27:true|false}",
+			"    SourceDBInstanceIdentifier: ${28}",
+			"    StorageEncrypted: ${29:true|false}",
+			"    StorageType: ${30}",
+			"    VPCSecurityGroups:",
+			"      - ${31:vpc-sg-id}",
+			"    Tags:",
+			"      - Key: ${32:keyname}",
+			"        Value: ${33:value}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"rds-dbparametergroup": {
+		"prefix": "rds-dbparametergroup",
+		"body": [
+			"${1:rdsDBParameterGroup}:",
+			"  Type: AWS::RDS::DBParameterGroup",
+			"  Properties:",
+			"    Description: ${2}",
+			"    Family: ${3}",
+			"    Parameters:",
+			"      ${4:key1}: ${5:value1}",
+			"      ${6:key2}: ${7:value2}",
+			"    Tags:",
+			"      - Key: ${8:keyname}",
+			"        Value: ${9:value}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"rds-dbsecuritygroup": {
+		"prefix": "rds-dbsecuritygroup",
+		"body": [
+			"${1:rdsDBSecurityGroup}:",
+			"  Type: AWS::RDS::DBSecurityGroup",
+			"  Properties:",
+			"    EC2VpcId: ${2}",
+			"    GroupDescription: ${3}",
+			"    DBSecurityGroupIngress:",
+			"      - ",
+			"        CIDRIP: ${4:--.--.--.--/--}",
+			"        DBSecurityGroupName: ${5}",
+			"        EC2SecurityGroupId: ${6}",
+			"        EC2SecurityGroupName: ${7}",
+			"        EC2SecurityGroupOwnerId: ${8}",
+			"      - ",
+			"        ${9: RDS Security Group Rule}",
+			"  Tags:",
+			"    - Key: ${10:keyname}",
+			"      Value: ${11:value}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"rds-dbsecuritygroupingress": {
+		"prefix": "rds-dbsecuritygroupingress",
+		"body": [
+			"CIDRIP: ${1:--.--.--.--/--}",
+			"DBSecurityGroupName: ${2}",
+			"EC2SecurityGroupId: ${3}",
+			"EC2SecurityGroupName: ${4}",
+			"EC2SecurityGroupOwnerId: ${5}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"rds-dbsubnetgroup": {
+		"prefix": "rds-dbsubnetgroup",
+		"body": [
+			"${1:rdsDBSubnetGroup}:",
+			"  Type: AWS::RDS::DBSubnetGroup",
+			"  Properties:",
+			"    DBSubnetGroupDescription: ${2}",
+			"    SubnetIds:",
+			"      - ${3:subnet-id}",
+			"  Tags:",
+			"    - Key: ${4:keyname}",
+			"      Value: ${5:value}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"rds-eventsubscription": {
+		"prefix": "rds-eventsubscription",
+		"body": [
+			"${1:rdsEventSubscription}:",
+			"Type: AWS::RDS::EventSubscription",
+			"Properties:",
+			"  Enabled: ${2:true | false}",
+			"  EventCategories:",
+			"    - ${3:event-category}",
+			"  SnsTopicArn: ${4}",
+			"  SourceIds:",
+			"    - ${5:source-id}",
+			"  SourceType: ${6}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"redshift-cluster": {
+		"prefix": "redshift-cluster",
+		"body": [
+			"${1:redshiftCluster}:",
+			"  Type: AWS::Redshift::Cluster",
+			"  Properties:",
+			"    AllowVersionUpgrade: ${2:true | false}",
+			"    AutomatedSnapshotRetentionPeriod: ${3}",
+			"    AvailabilityZone: ${4}",
+			"    ClusterParameterGroupName: ${5}",
+			"    ClusterSecurityGroups:",
+			"      - ${6:sg-id}",
+			"    ClusterSubnetGroupName: ${7}",
+			"    ClusterType: ${8}",
+			"    ClusterVersion: ${9}",
+			"    DBName: ${10}",
+			"    ElasticIp: ${11}",
+			"    Encrypted: ${12:true | false}",
+			"    HsmClientCertificateIdentifier: ${13}",
+			"    HsmConfigurationIdentifier: ${14}",
+			"    MasterUsername: ${15}",
+			"    MasterUserPassword: ${16}",
+			"    NodeType: ${17}",
+			"    NumberOfNodes: ${18}",
+			"    OwnerAccount: ${19}",
+			"    Port: ${20}",
+			"    PreferredMaintenanceWindow: ${21}",
+			"    PubliclyAccessible: ${22:true | false}",
+			"    SnapshotClusterIdentifier: ${23}",
+			"    SnapshotIdentifier: ${24}",
+			"    VpcSecurityGroupIds:",
+			"      - ${25:sg-id}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"redshift-clusterparametergroup": {
+		"prefix": "redshift-clusterparametergroup",
+		"body": [
+			"${1:redshiftClusterParameterGroup}:",
+			"  Type: AWS::Redshift::ClusterParameterGroup",
+			"  Properties:",
+			"    Description: ${2}",
+			"    ParameterGroupFamily: ${3}",
+			"    Parameters:",
+			"      - ${4:parameter}",
+			"    Tags:",
+			"      - Key: ${5:keyname}",
+			"        Value: ${6:value}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"redshift-clustersecuritygroup": {
+		"prefix": "redshift-clustersecuritygroup",
+		"body": [
+			"${1:redshiftClusterSecurityGroup}:",
+			"  Type: AWS::Redshift::ClusterSecurityGroup",
+			"  Properties:",
+			"    Description: ${2}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"redshift-clustersecuritygroupingress": {
+		"prefix": "redshift-clustersecuritygroupingress",
+		"body": [
+			"${1:redshiftClusterSecurityGroupIngress}:",
+			"  Type: AWS::Redshift::ClusterSecurityGroupIngress",
+			"  Properties:",
+			"    ClusterSecurityGroupName: ${2}",
+			"    CIDRIP: ${3}",
+			"    EC2SecurityGroupName: ${4}",
+			"    EC2SecurityGroupOwnerId: ${5}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"redshift-clustersubnetgroup": {
+		"prefix": "redshift-clustersubnetgroup",
+		"body": [
+			"${1:redshiftClusterSubnetGroup}:",
+			"  Type: AWS::Redshift::ClusterSubnetGroup",
+			"  Properties:",
+			"    Description: ${2}",
+			"    SubnetIds:",
+			"      - ${3:subnet-id}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"start": {
+		"prefix": "start",
+		"body": [
+			"AWSTemplateFormatVersion: 2010-09-09",
+			"Description: ${1:---}",
+			"Metadata: ${2}",
+			"\r",
+			"Parameters: ${3}",
+			"\r",
+			"Mappings: ${4}",
+			"\r",
+			"Conditions: ${5}",
+			"\r",
+			"Resources: ${6}",
+			"\r",
+			"Outputs:"
+		]
+	},
+	"find-in-map": {
+		"prefix": "find-in-map",
+		"body": [
+			"!FindInMap [ MappingName, keyname, value ]"
+		],
+		"description": "!FindInMap [ MappingName, keyname, value ]",
+		"scope": "source.cloudformation"
+	},
+	"get-attr": {
+		"prefix": "get-attr",
+		"body": "!GetAtt logicalNameOfResource.attributeName",
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"get-azs": {
+		"prefix": "get-azs",
+		"body": "!GetAZs ''",
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"if": {
+		"prefix": "if",
+		"body": [
+			"!If [condition_name, value_if_true, value_if_false]"
+		],
+		"description": "Intrinsic Function - If",
+		"scope": "source.cloudformation"
+	},
+	"ref": {
+		"prefix": "ref",
+		"body": "!Ref logicalName",
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"parameter-type-availabilityzone-name-list": {
+		"prefix": "parameter-type-availabilityzone-name-list",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: List<AWS::EC2::AvailabilityZone::Name>",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-availabilityzone-name": {
+		"prefix": "parameter-type-availabilityzone-name",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: AWS::EC2::AvailabilityZone::Name",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-ec2-image-id-list": {
+		"prefix": "parameter-type-ec2-image-id-list",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: List<AWS::EC2::Image::Id>",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-ec2-image-id": {
+		"prefix": "parameter-type-ec2-image-id",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: AWS::EC2::Image::Id",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-ec2-instance-id-list": {
+		"prefix": "parameter-type-ec2-instance-id-list",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: List<AWS::EC2::Instance::Id>",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-ec2-instance-id": {
+		"prefix": "parameter-type-ec2-instance-id",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: AWS::EC2::Instance::Id",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-ec2-security-group-name-list": {
+		"prefix": "parameter-type-ec2-security-group-name-list",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: List<AWS::EC2::SecurityGroup::GroupName>",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-ec2-security-group-name": {
+		"prefix": "parameter-type-ec2-security-group-name",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: AWS::EC2::SecurityGroup::GroupName",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-ec2-volume-id-list": {
+		"prefix": "parameter-type-ec2-volume-id-list",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: List<AWS::EC2::Volume::Id>",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-ec2-volume-id": {
+		"prefix": "parameter-type-ec2-volume-id",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: AWS::EC2::Volume::Id",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-keypair-keyname": {
+		"prefix": "parameter-type-keypair-keyname",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: AWS::EC2::KeyPair::KeyName",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-route53-hostedzone-id-list": {
+		"prefix": "parameter-type-route53-hostedzone-id-list",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: List<AWS::Route53::HostedZone::Id>",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-route53-hostedzone-id": {
+		"prefix": "parameter-type-route53-hostedzone-id",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: AWS::Route53::HostedZone::Id",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-securitygroup-id-list": {
+		"prefix": "parameter-type-securitygroup-id-list",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: List<AWS::EC2::SecurityGroup::Id>",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-securitygroup-id": {
+		"prefix": "parameter-type-securitygroup-id",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: AWS::EC2::SecurityGroup::Id",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-subnet-id-list": {
+		"prefix": "parameter-type-subnet-id-list",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: List<AWS::EC2::Subnet::Id>",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-subnet-id": {
+		"prefix": "parameter-type-subnet-id",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: AWS::EC2::Subnet::Id",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-vpc-id-list": {
+		"prefix": "parameter-type-vpc-id-list",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: List<AWS::EC2::VPC::Id>",
+			"  Default: ${3}"
+		]
+	},
+	"parameter-type-vpc-id": {
+		"prefix": "parameter-type-vpc-id",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ${2}",
+			"  Type: AWS::EC2::VPC::Id",
+			"  Default: ${3}"
+		]
+	},
+	"parameter": {
+		"prefix": "parameter",
+		"body": [
+			"${1:paramName}:",
+			"  Description: ",
+			"  Type: ${3:String|Number|CommaDelimitedList}",
+			"  Default: ${4:-}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"output": {
+		"prefix": "output",
+		"body": [
+			"${1:LogicalID}:",
+			"  Description: ${2:Information about the value}",
+			"  Value:",
+			"  Export: ",
+			"    Name:"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"tag": {
+		"prefix": "tag",
+		"body": [
+			"Key: ${1:keyname}",
+			"Value: ${2:value}"
+		]
+	},
+	"map": {
+		"prefix": "map",
+		"body": [
+			"${1:mapName}:",
+			"  ${2:mapping01}:",
+			"    ${3:key01}:",
+			"      Name: ${4:value01}",
+			"  ${5:mapping02}:",
+			"    ${6:key02}:",
+			"      Name: ${7:value02}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"route-table-assoc": {
+		"prefix": "route-table-assoc",
+		"body": [
+			"${1:routeTableAssocName}:",
+			"  Type: AWS::EC2::SubnetRouteTableAssociation",
+			"  Properties:",
+			"    SubnetId: ${2:subnet-id}",
+			"    RouteTableId: ${3:rtable-id}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"route-table": {
+		"prefix": "route-table",
+		"body": [
+			"${1:routeTableName}:",
+			"  Type: AWS::EC2::RouteTable",
+			"  Properties:",
+			"    VpcId: ${2:vpc-id}",
+			"    Tags:",
+			"      - Key: ${3:keyname}",
+			"        Value: ${4:value}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"route": {
+		"prefix": "route",
+		"body": [
+			"${1:routeName}:",
+			"  Type: AWS::EC2::Route",
+			"  Properties:",
+			"    RouteTableId: ${2:rtable-id}",
+			"    DestinationCidrBlock: ${3:--.--.--.--/--}",
+			"    GatewayId: ${4:gataway-id}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"route53-healthcheck": {
+		"prefix": "route53-healthcheck",
+		"body": [
+			"${1:route53HealthCheck}:",
+			"  Type: AWS::Route53::HealthCheck",
+			"  Properties:",
+			"    HealthCheckConfig:",
+			"      IPAddress: ${2:'000.000.000.000'}",
+			"      Port: ${3:'80'}",
+			"      Type: ${4:HTTP}",
+			"      ResourcePath: ${5:'/example/index.html'}",
+			"      FullyQualifiedDomainName: ${6:'example.com'}",
+			"      RequestInterval: ${7:'30'}",
+			"      FailureThreshold: ${8:'3'}",
+			"    HealthCheckTags:",
+			"      - ",
+			"        Key: ${9:\"SampleKey1\"}",
+			"        Value: ${10:\"SampleValue1\"}",
+			"      - ",
+			"        Key: ${11:\"SampleKey2\"}",
+			"        Value: ${12:\"SampleValue2\"}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"route53-hostedzone": {
+		"prefix": "route53-hostedzone",
+		"body": [
+			"${1:route53HostedZone}:",
+			"  Type: AWS::Route53::HostedZone",
+			"  Properties:",
+			"    Name: ${2}",
+			"    HostedZoneConfig:",
+			"      Comment: ${3:My hosted zone for example.com}",
+			"    VPCs:",
+			"      - ",
+			"        VPCId: ${4:\"vpc-id\"}",
+			"        VPCRegion: ${5:\"vpc-region\"}",
+			"    HostedZoneTags:",
+			"      - ",
+			"        Key: ${6:\"SampleKey1\"}",
+			"        Value: ${7:\"SampleValue1\"}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"route53-recordsetgroup": {
+		"prefix": "route53-recordsetgroup",
+		"body": [
+			"${1:route53RSGroup}:",
+			"  Type: AWS::Route53::RecordSetGroup",
+			"  Properties:",
+			"    Comment: ${2}",
+			"    HostedZoneId: ${3}",
+			"    HostedZoneName: ${4}",
+			"    RecordSets: ",
+			"    - ${5:recordset}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"route53-recordset": {
+		"prefix": "route53-recordset",
+		"body": [
+			"${1:route53RS}:",
+			"  Type: AWS::Route53::RecordSet",
+			"  Properties:",
+			"    Name: ${2}",
+			"    Comment: ${3}",
+			"    Type: ${4:A | AAAA | CNAME | MX | NS | PTR | SOA | SPF | SRV | TXT}",
+			"    TTL: ${5}",
+			"    AliasTarget: ${6}",
+			"    Failover: ${7}",
+			"    GeoLocation: ${8}",
+			"    HealthCheckId: ${9}",
+			"    HostedZoneId: ${10}",
+			"    HostedZoneName: ${11}",
+			"    Region: ${12}",
+			"    ResourceRecords: ${13}",
+			"    - ${14:record}",
+			"    SetIdentifier: ${15}",
+			"    Weight: ${16}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"s3-bucket": {
+		"prefix": "s3-bucket",
+		"body": [
+			"${1:s3Bucket}:",
+			"  Type: AWS::S3::Bucket",
+			"  Properties: ",
+			"    AccessControl: ${2:Private | PublicRead | PublicReadWrite | AuthenticatedRead | LogDeliveryWrite | BucketOwnerRead | BucketOwnerFullControl}",
+			"    BucketName: ${3}",
+			"    CorsConfiguration: ${4}",
+			"    LifecycleConfiguration: ${5}",
+			"    NotificationConfiguration: ${6}",
+			"    VersioningConfiguration: ${7}",
+			"    WebsiteConfiguration: ${8}",
+			"    Tags:",
+			"      - Key: ${9:key}",
+			"        Value: ${10:value}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"s3-bucketpolicy": {
+		"prefix": "s3-bucketpolicy",
+		"body": [
+			"${1:s3BucketPolicy}:",
+			"  Type: AWS::S3::BucketPolicy",
+			"  Properties:",
+			"    Bucket: ${2}",
+			"    PolicyDocument: ${3}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"security-group": {
+		"prefix": "security-group",
+		"body": [
+			"${1:secGroupName}:",
+			"  Type: AWS::EC2::SecurityGroup",
+			"  Properties:",
+			"    GroupName: ${2}",
+			"    GroupDescription: ${3}",
+			"    VpcId:${4}",
+			"    SecurityGroupIngress:",
+			"      - ${5:Security Group Rule}",
+			"    SecurityGroupEgress:",
+			"      - ${6:Security Group Rule}",
+			"    Tags:",
+			"      - Key:${7}",
+			"        Value:${8}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"security-group-egress-cidr": {
+		"prefix": "security-group-egress-cidr",
+		"body": [
+			"IpProtocol: ${1:[tcp|udp|ip]}",
+			"FromPort: ${2}",
+			"ToPort: ${3}",
+			"CidrIp: ${4:--.--.--.--/--}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"security-group-ingress-cidr": {
+		"prefix": "security-group-ingress-cidr",
+		"body": [
+			"IpProtocol: ${1:[tcp|udp|ip]}",
+			"FromPort: ${2}",
+			"ToPort: ${3}",
+			"CidrIp: ${4:--.--.--.--/--}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"subnet": {
+		"prefix": "subnet",
+		"body": [
+			"${1:subnetName}:",
+			"  Type: AWS::EC2::Subnet",
+			"  Properties:",
+			"    AvailabilityZone: ${2:zone-id}",
+			"    VpcId: ${3:vpc-id}",
+			"    CidrBlock: ${4:--.--.--.--/--}",
+			"    Tags:",
+			"      - Key: ${5:keyname}",
+			"        Value: ${6:value}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"sns-subscription": {
+		"prefix": "sns-subscription",
+		"body": [
+			"${1:sns-subscription}:",
+			"  Type: AWS::SNS::Subscription",
+			"  Properties:",
+			"    TopicArn: 'arn:aws:sns:[Region]:[AccountID]:[TopicName]'",
+			"    Protocol: http | https | email | email-json | sms | sqs | application | lambda",
+			"    Endpoint: ",
+			"    Region: ",
+			"    DeliveryPolicy: ",
+			"    FilterPolicy: ",
+			"    RawMessageDelivery: "
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"sns-topic": {
+		"prefix": "sns-topic",
+		"body": [
+			"${1:snsTopic}:",
+			"  Type: AWS::SNS::Topic",
+			"  Properties:",
+			"    DisplayName: ${2}",
+			"    Subscription: ${3}",
+			"    TopicName: ${4}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"sns-topicpolicy": {
+		"prefix": "sns-topicpolicy",
+		"body": [
+			"${1:snsTopicPolicy}:",
+			"Type: AWS::SNS::TopicPolicy",
+			"Properties:",
+			"  Topics:",
+			"    - ",
+			"      ${2:sns-topic-arn}",
+			"  PolicyDocument: ${3:# A policy document. JSON or YAML}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"sqs-queuepolicy": {
+		"prefix": "sqs-queuepolicy",
+		"body": [
+			"${1:sqsQueuePolicy}:",
+			"  Type: AWS::SQS::QueuePolicy",
+			"  Properties:",
+			"    Queues:",
+			"      - ",
+			"        ${2:sqs-id}",
+			"    PolicyDocument: ${3:# include in JSON format}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"sqs-queue": {
+		"prefix": "sqs-queue",
+		"body": [
+			"${1:sqsQueue}:",
+			"  Type: AWS::SQS::Queue",
+			"  Properties:",
+			"    QueueName: ${2}",
+			"    DelaySeconds: ${3}",
+			"    MaximumMessageSize: ${4}",
+			"    MessageRetentionPeriod: ${5}",
+			"    ReceiveMessageWaitTimeSeconds: ${6}",
+			"    RedrivePolicy: ${6}",
+			"    VisibilityTimeout: ${7}",
+			"    FifoQueue: ${8: true | false}",
+			"    Tags:",
+			"      - Key: ${9:keyname}",
+			"        Value: ${10:value}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"vpc": {
+		"prefix": "vpc",
+		"body": [
+			"${1:myVPC}:",
+			"  Type: AWS::EC2::VPC",
+			"  Properties:",
+			"    CidrBlock: ${2:--.--.--.--/--}",
+			"    EnableDnsSupport: ${3:true}",
+			"    Tags:",
+			"      - Key: ${4:keyname}",
+			"        Value: ${5:value}"
+		]
+	},
+	"vpn-gateway": {
+		"prefix": "vpn-gateway",
+		"body": [
+			"${1:vgwName}:",
+			"  Type: AWS::EC2::VPNGateway",
+			"  Properties:",
+			"    Type: ipsec.1",
+			"    Tags:",
+			"      - Key: ${2:keyname}",
+			"        Value: ${3:value}",
+			"${4:AttachVpnGateway}:",
+			"  Type: AWS::EC2::VPCGatewayAttachment",
+			"  Properties:",
+			"    VpcId: ${4:vpc-id}",
+			"    VpnGatewayId: !Ref ${1:vgwName}"
+		],
+		"description": "",
+		"scope": "source.cloudformation"
+	},
+	"code-pipeline": {
+		"prefix": "code-pipeline",
+		"body": [
+			"${1:codepipeline}:",
+			"  Type: AWS::CodePipeline::Pipeline",
+			"  Properties:",
+			"    Name: ${2:name}",
+			"    RoleArn: ${3}",
+			"    ArtifactStore:",
+			"      Type: S3",
+			"      Location: ${4}",
+			"    Stages: ${5}",
+			"      - ",
+			"        Name: ${6:name}",
+			"        Actions:",
+			"          - ${7:actions}",
+			"        Blockers:",
+			"          - ${8:blockers}",
+			"    RestartExecutionOnUpdate: ${9:true | false}",
+			"    DisableInboundStageTransitions: ${10}"
+		],
+		"description": "",
+		"scope": "json"
+	},
+	"code-pipeline-stage": {
+		"prefix": "code-pipeline-stage",
+		"body": [
+			"Name: ${1:name}",
+			"Actions:",
+			"  - ${2:actions}",
+			"Blockers:",
+			"  - ${3:blockers}"
+		],
+		"description": "",
+		"scope": "json"
+	},
+	"code-pipeline-action": {
+		"prefix": "code-pipeline-action",
+		"body": [
+			"Name: ${1:\"actionName\"}",
+			"ActionTypeId:",
+			"  Category: ${2:Source | Build | Deploy | Test | Invoke | Approval}",
+			"  Owner: ${3:AWS | ThirdParty | Custom}",
+			"  Provider: ${4:S3|CodeCommit|GitHub|CloudFormation|CodeBuild|CodeDeploy|ElasticBeanstalk|Lambda|ECS|jenkinsProviderName}",
+			"  Version: \"1\"",
+			"Configuration:",
+			"    ${5:key: value}",
+			"InputArtifacts:",
+			"    - ",
+			"      ${6:inputartifact}",
+			"OutputArtifacts:",
+			"    - ",
+			"      ${7:outputartifact}",
+			"RoleArn: ${8:\"\"}",
+			"RunOrder: ${9:1|2|3|4}"
+		],
+		"description": "",
+		"scope": "json"
+	}
+}
