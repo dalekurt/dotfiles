@@ -1,3 +1,5 @@
+# zmodload zsh/zprof
+export TERM="xterm-256color"
 export ZSHDOT=$HOME/.dotfiles
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
@@ -27,39 +29,27 @@ compinit
 
 unset config_files
 
+######### nvm
+# TODO rafael: try to move from here
+# source "/usr/local/opt/nvm/nvm.sh"
+
 ######### fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-alias preview="fzf --preview 'bat --color \"always\" {}'"
-# add support for ctrl+o to open selected file in VS Code
-export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(e {})+abort'"
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# alias preview="fzf --preview 'bat --color \"always\" {}'"
+# # add support for ctrl+o to open selected file in VS Code
+# export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(e {})+abort'"
 
-######### google cloud
-# # The next line updates PATH for the Google Cloud SDK.
-# if [ -f '/Users/rafael.eyng/sftw/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/rafael.eyng/sftw/google-cloud-sdk/path.zsh.inc'; fi
-# # The next line enables shell command completion for gcloud.
-# if [ -f '/Users/rafael.eyng/sftw/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/rafael.eyng/sftw/google-cloud-sdk/completion.zsh.inc'; fi
-
-PATH="~/bin:$PATH"
+export PATH="~/bin:$PATH"
 
 ######### thumbor
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-# watcher / watch654 / ChangeMe
-alias ssh-thumbor-be-prod='i2cssh -b -l watcher cmah19mp01lb08.globoi.com cmah19mp01lb09.globoi.com cmal19mp01lb08.globoi.com cmal19mp01lb09.globoi.com'
-alias ssh-thumbor-fe-prod='i2cssh -b -l rafael.eyng cmah25mp39lf02.globoi.com cmal25mp39lf02.globoi.com cmaq25mp39lf02.globoi.com'
-alias ssh-thumbor-worker-prod='i2cssh -b -l rafael.eyng cmah19mp01lb10.globoi.com cmal19mp01lb10.globoi.com'
-alias ssh-thumbor-be-qa='i2cssh -b -l rafael.eyng thumbor-be-qa-1.cmah08be-1109.cp.globoi.com thumbor-be-qa-2.cmal08be-1111.cp.globoi.com'
-alias ssh-thumbor-fe-qa='i2cssh -b -l rafael.eyng thumbor-fe-qa-1.cmah08fe-1393.cp.globoi.com thumbor-fe-qa-2.cmal08fe-1414.cp.globoi.com'
-alias ssh-thumbor-worker-qa='i2cssh -b -l rafael.eyng thumbor-worker-qa-1.cmah08be-1109.cp.globoi.com thumbor-worker-qa-2.cmal08be-1111.cp.globoi.com'
-alias ssh-thumbor-be-dev='i2cssh -b -l rafael.eyng -m thumbor-be-dev-2.cmal08be-1102.cp.globoi.com'
-alias ssh-thumbor-fe-dev='i2cssh -b -l rafael.eyng -m thumbor-fe-dev-2.cmal08fe-1412.cp.globoi.com'
-alias ssh-thumbor-worker-dev='i2cssh -b -l rafael.eyng thumbor-worker-dev-2.cmal08be-1102.cp.globoi.com'
-alias ssh-thumbor-be-staging='i2cssh -b -l rafael.eyng thumbor-staging-be-1.cmaq19be-19.cp.globoi.com thumbor-staging-be-2.cmaq21be-17.cp.globoi.com'
-alias ssh-thumbor-fe-staging='i2cssh -b -l rafael.eyng thumbor-staging-fe-1.cmaq19fe-137.cp.globoi.com'
-alias ssh-thumbor-worker-staging='i2cssh -b -l rafael.eyng thumbor-staging-worker-1.cmaq19be-19.cp.globoi.com thumbor-staging-worker-2.cmaq21be-17.cp.globoi.com'
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
-export HOMEBREW_GITHUB_API_TOKEN=d302c36b1fc27ea9103e90bc00b40be7cde55f82
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# zprof
 
+#autoload -U colors; colors
+#source ~/.dotfiles/zsh/kubectl.zsh
+#RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
