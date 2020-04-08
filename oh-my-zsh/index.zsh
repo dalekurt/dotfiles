@@ -1,37 +1,30 @@
 export ZSH=~/.oh-my-zsh
-
+POWERLEVEL9K_MODE='nerdfont-complete'
 ZSH_THEME="powerlevel9k/powerlevel9k"
+
+# zsh tmux settings
+ZSH_TMUX_AUTOSTART='true'
+
 DEFAULT_USER=$(whoami)
 
+# plugins=(brew git osx docker git yarn z)
+
 plugins=(
+  zsh-kubectl-prompt
   aws
-  # aws-vault
-  # gcloud
-  # dotfiles
   git
   git-flow
-  gitfast
   brew
   history
-  node
-  npm
   kubectl
   dotenv
   docker
-  docker-compose
-  bundler
-  rake
-  ruby
-  rbenv
   osx
   autojump
   fast-syntax-highlighting
-  # zsh-syntax-highlighting
-  # zsh-autosuggestions
-  # zsh-completions
   history-substring-search
   terraform
-  z
+#  zsh-kubectl-prompt
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -39,14 +32,7 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/local/opt/powerlevel9k/powerlevel9k.zsh-theme
-source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
-
 fpath=(/usr/local/share/zsh-completions $fpath)
-
-# Kube PS1
-prompt_kube_ps1(){
-   echo -n `kube_ps1`
-}
 
 # User with skull
 user_with_skull() {
@@ -56,17 +42,15 @@ P9K_CUSTOM_USER="user_with_skull"
 P9K_RBENV_PROMPT_ALWAYS_SHOW=true
 P9K_GO_VERSION_PROMPT_ALWAYS_SHOW=true
 P9K_PYTHON_VERSION_PROMPT_ALWAYS_SHOW=true
-# P9K_LEFT_PROMPT_ELEMENTS=(kube_ps1 custom_user dir vcs)
-P9K_RIGHT_PROMPT_ELEMENTS=(background_jobs battery)
-POWERLEVEL9K_MODE='nerdfont-complete'
+#P9K_LEFT_PROMPT_ELEMENTS=(custom_user dir vcs)
+#P9K_RIGHT_PROMPT_ELEMENTS=(kube_ps1 background_jobs docker_machine)
+# POWERLEVEL9K_MODE='nerdfont-complete'
 
 # 
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(kube_ps1 dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time)
-# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs)
-# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(disk_usage time status)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history)
 # POWERLEVEL9K_TIME_FORMAT="%D{\uf073 %d-%h}"
 # POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M \uf073 %d-%h}"
 
@@ -134,4 +118,3 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-
