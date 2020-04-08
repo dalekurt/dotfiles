@@ -2,7 +2,7 @@ cask_args appdir: '/Applications'
 
 # Taps
 tap 'homebrew/bundle'
-tap 'caskroom/fonts' # tap for fonts
+tap 'homebrew/cask-fonts' # tap for fonts
 tap 'azure/draft'
 tap 'weaveworks/tap'
 brew 'warrensbox/tap/tfswitch'
